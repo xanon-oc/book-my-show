@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import data from "../../../public/data.json";
 import { addToDb } from "../../../public/fakedb";
 import { AuthContext } from "../../Providers/AuthProvider";
+import toast, { Toaster } from "react-hot-toast";
+
 const DetailsCard = () => {
   const [movie, setMovie] = useState([]);
 
@@ -12,7 +14,7 @@ const DetailsCard = () => {
     const movies = data.find((item) => item.show.id === parseInt(id));
     setMovie(movies);
   }, [movie, id]);
-
+  const notify = () => toast.success("Successfully Added To Cart.");
   const handleFormData = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -27,11 +29,13 @@ const DetailsCard = () => {
     const jsonData = JSON.stringify(userInfo);
     // Save user info to local storage
     console.log(userInfo);
+    notify();
     addToDb(jsonData);
   };
 
   return (
     <section>
+      <Toaster position="bottom-center" reverseOrder={false} />
       <div className="mx-auto max-w-screen-2xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2">
           <div className="relative z-10 lg:py-16">
