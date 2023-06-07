@@ -225,7 +225,7 @@ const DetailsCard = () => {
 
                   <div>
                     <label htmlFor="Email" className="sr-only">
-                      Password
+                      email
                     </label>
 
                     <div className="relative">
@@ -234,7 +234,7 @@ const DetailsCard = () => {
                         name="email"
                         value={user?.email}
                         className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                        placeholder="Enter password"
+                        placeholder="Enter email"
                       />
 
                       <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
