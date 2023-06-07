@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const Header = () => {
+  const { user, logOut } = useContext(AuthContext);
   return (
     <header aria-label="Site Header" className="border-b border-gray-100">
       <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-between sm:px-6 lg:px-8">
@@ -58,51 +61,64 @@ const Header = () => {
               </span>
 
               <span className="border-e border-e-gray-100">
-                <a
-                  href="/account"
-                  className="grid h-16 w-16 place-content-center border-b-4 border-transparent hover:border-red-700"
-                >
-                  <svg
-                    className="h-4 w-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                {user ? (
+                  <div className="flex items-center">
+                    <div className="relative group">
+                      <img
+                        className="mx-4 h-8 rounded-full"
+                        src={user.photoURL}
+                        alt="User Avatar"
+                      />
+                      <div className="absolute w-24 bg-gray-200 text-gray-800 px-2 py-1 text-sm rounded mt-2 opacity-0 invisible transition-opacity duration-300 group-hover:opacity-100 group-hover:visible">
+                        {user.displayName}
+                      </div>
+                    </div>
+                    <div>
+                      <button onClick={logOut} className="relative group p-2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+                          />
+                        </svg>
+
+                        <div className="absolute w-[65px] bg-gray-200 text-gray-800 px-2 py-1 text-sm rounded mt-2 opacity-0 invisible transition-opacity duration-300 group-hover:opacity-100 group-hover:visible">
+                          Log out
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <Link
+                    to="/login"
+                    className="grid h-16 w-16 place-content-center border-b-4 border-transparent hover:border-red-700"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
-                  </svg>
+                    <svg
+                      className="h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
 
-                  <span className="sr-only"> Account </span>
-                </a>
-              </span>
-
-              <span className="hidden sm:block">
-                <a
-                  href="/search"
-                  className="grid h-16 w-16 place-content-center border-b-4 border-transparent hover:border-red-700"
-                >
-                  <svg
-                    className="h-4 w-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
-
-                  <span className="sr-only"> Search </span>
-                </a>
+                    <span className="sr-only"> Account </span>
+                  </Link>
+                )}
               </span>
             </div>
           </div>

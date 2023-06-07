@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -9,6 +9,25 @@ import { Autoplay, Pagination, Navigation } from "swiper";
 const Banner = () => {
   const progressCircle = useRef(null);
   const progressContent = useRef(null);
+  const [slidesPerView, setSlidesPerView] = useState(4);
+  const updateSlidesPerView = () => {
+    if (window.innerWidth < 640) {
+      setSlidesPerView(1);
+    } else if (window.innerWidth < 768) {
+      setSlidesPerView(2);
+    } else if (window.innerWidth < 1024) {
+      setSlidesPerView(3);
+    } else {
+      setSlidesPerView(4);
+    }
+  };
+  useEffect(() => {
+    window.addEventListener("resize", updateSlidesPerView);
+    updateSlidesPerView();
+    return () => {
+      window.removeEventListener("resize", updateSlidesPerView);
+    };
+  }, []);
   const onAutoplayTimeLeft = (s, time, progress) => {
     progressCircle.current.style.setProperty("--progress", 1 - progress);
     progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
@@ -17,7 +36,7 @@ const Banner = () => {
     <div className="relative">
       <div className="">
         <Swiper
-          slidesPerView={4}
+          slidesPerView={slidesPerView}
           navigation={true}
           spaceBetween={30}
           centeredSlides={true}

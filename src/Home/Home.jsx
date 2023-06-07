@@ -12,7 +12,7 @@ const Home = () => {
         <h2 className="mt-8 mb-8 text-2xl font-bold">
           Events Happening Near You
         </h2>
-        <div className="grid grid-cols-4 gap-8 mb-8">
+        <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-8 mb-8">
           {allData.map((item, index) => (
             <SingleCard key={index} item={item} />
           ))}
